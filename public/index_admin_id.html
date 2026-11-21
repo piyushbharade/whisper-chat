@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper – Disappearing Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- AUTH 1: EMPLOYEE LOGIN -->
+  <section id="view-login" class="login auth active">
+    <div class="login-card">
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span></div>
+      <div class="role-tabs"><span class="on">Employee</span><a href="#" data-auth="admin">Admin</a></div>
+      <h2>Employee login</h2>
+      <p class="sub">Sign in with your company account.</p>
+      <form id="login-form" novalidate>
+        <label class="field">Username or email
+          <input type="text" id="username-input" required autocomplete="username" />
+        </label>
+        <label class="field">Password
+          <span class="pw"><input type="password" id="password-input" required autocomplete="current-password" />
+            <button type="button" class="pw-toggle" data-toggle-pw aria-label="Show password"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+        </label>
+        <label class="field">Employee company ID
+          <input type="text" id="company-input" required autocomplete="off" />
+        </label>
+        <p class="form-error" id="login-error" role="alert"></p>
+        <a href="#" class="link" id="forgot-link">Forgot your password?</a>
+        <button type="submit" class="btn primary block">Sign in</button>
+        <p class="hint">New here? <a href="#" class="link" id="register-link">Create an account</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- AUTH 1b: ADMIN LOGIN -->
+  <section id="view-admin" class="login auth">
+    <div class="login-card">
+      <div class="brand-mark" aria-hidden="true"><span></span></div>
+      <h1>Admin Console</h1>
+      <p class="sub">Sign in with your Admin ID and Company ID.</p>
+      <div class="auth-switch" role="tablist">
+        <button type="button" data-auth="login">Employee</button>
+        <button type="button" data-auth="register">Create account</button>
+        <button type="button" class="on" data-auth="admin">Admin</button>
+      </div>
+      <form id="admin-form" novalidate>
+        <label class="field">Username or email
+          <input type="text" id="admin-username" required autocomplete="username" placeholder="e.g. admin or compadmin" />
+        </label>
+        <label class="field">Admin ID
+          <input type="text" id="admin-id" required autocomplete="off" placeholder="Enter your admin ID" />
+        </label>
+        <label class="field">Company ID
+          <input type="text" id="admin-company" required autocomplete="off" placeholder="WHISPER-HQ or WH-1001" />
+        </label>
+        <label class="field">Password
+          <span class="pw"><input type="password" id="admin-pw" required autocomplete="current-password" />
+            <button type="button" class="pw-toggle" data-toggle-pw aria-label="Show password"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+        </label>
+        <p class="form-error" id="admin-error" role="alert"></p>
+        <button type="submit" class="btn primary block">Sign in as admin</button>
+        <p class="hint">Whisper Admin: <b>admin</b> · ID <b>ADM-1001</b> · Co <b>WHISPER-HQ</b> · <b>admin@123</b><br/>Company Admin: <b>compadmin</b> · ID <b>ADM-2001</b> · Co <b>WH-1001</b> · <b>company@123</b></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- AUTH 1c: CREATE ADMIN ACCOUNT -->
+  <section id="view-adminreg" class="login auth">
+    <div class="login-card">
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span></div>
+      <div class="role-tabs"><a href="#" data-auth="register">Employee</a><span class="on">Admin</span></div>
+      <h2>Create admin account</h2>
+      <p class="sub">For people who manage employees and company access.</p>
+      <form id="adminreg-form" novalidate>
+        <label class="field">Username
+          <input type="text" id="ar-username" maxlength="20" autocomplete="username" placeholder="Choose a username" />
+        </label>
+        <label class="field">Email
+          <input type="email" id="ar-email" autocomplete="email" placeholder="you@company.com" />
+        </label>
+        <label class="field">Admin ID
+          <input type="text" id="ar-aid" maxlength="20" autocomplete="off" placeholder="Create your admin ID" />
+        </label>
+        <label class="field">Password
+          <span class="pw"><input type="password" id="ar-password" autocomplete="new-password" placeholder="At least 8 characters" />
+            <button type="button" class="pw-toggle" data-toggle-pw aria-label="Show password"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+        </label>
+        <p class="form-error" id="ar-error" role="alert"></p>
+        <button type="submit" class="btn primary block">Create admin account</button>
+        <p class="hint">Already an admin? <a href="#" class="link" data-auth="admin">Sign in</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="view-adminpanel" class="auth admin-shell">
+    <header class="ad-top">
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span><span class="admin-badge">Admin</span></div>
+      <span class="ad-who" id="ad-who"></span>
+      <button class="btn ghost sm" id="admin-logout">Log out</button>
+    </header>
+    <nav class="ad-tabs" aria-label="Admin sections">
+      <button data-ad="overview" class="on">Overview</button>
+      <button data-ad="employees">Employees</button>
+      <button data-ad="admins">Admins</button>
+      <button data-ad="policy">Company policy</button>
+    </nav>
+
+    <main class="ad-main">
+      <div class="ad-pane" id="ad-overview">
+        <div class="ad-head"><div><h2>Overview</h2><p>A quick look at your company on Whisper.</p></div></div>
+        <div class="tiles" id="ad-tiles"></div>
+        <div class="two-col">
+          <div class="panel"><h3>Employees per company ID</h3><p class="panel-sub">Accounts grouped by the company ID they sign in with.</p><div class="chart" id="ad-companies"></div></div>
+          <div class="panel"><h3>Recent admin activity</h3><p class="panel-sub">The last changes made by admins.</p><ul class="vlog" id="ad-activity"></ul></div>
+        </div>
+      </div>
+
+      <div class="ad-pane" id="ad-employees" hidden>
+        <div class="ad-head">
+          <div><h2>Employees</h2><p id="ad-emp-count"></p></div>
+          <div class="page-tools"><input type="search" id="ad-search" placeholder="Search name, email, company ID" autocomplete="off" /><button class="btn primary" id="ad-add-emp">Add employee</button></div>
+        </div>
+        <div class="ad-list" id="ad-emp-list"></div>
+      </div>
+
+      <div class="ad-pane" id="ad-admins" hidden>
+        <div class="ad-head"><div><h2>Admins</h2><p id="ad-admin-count"></p></div><button class="btn primary sm" id="ad-add-admin" type="button" hidden>+ Add admin</button></div>
+        <div class="two-col">
+          <div class="panel"><h3>Admin accounts</h3><p class="panel-sub">People who can manage this company.</p><div class="ad-list" id="ad-admin-list"></div></div>
+          <div class="panel"><h3>Change my password</h3><p class="panel-sub">Use at least 8 characters.</p>
+            <form id="ad-pw-form" novalidate>
+              <label class="field">Current password<input type="password" id="ad-cur" autocomplete="current-password" /></label>
+              <label class="field">New password<input type="password" id="ad-new" autocomplete="new-password" /></label>
+              <label class="field">Confirm new password<input type="password" id="ad-new2" autocomplete="new-password" /></label>
+              <p class="form-error" id="ad-pw-error" role="alert"></p>
+              <button type="submit" class="btn primary">Update password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="ad-pane" id="ad-policy" hidden>
+        <div class="ad-head"><div><h2>Company policy</h2><p>Rules that apply to every employee. Changes save instantly.</p></div></div>
+        <div class="panel pol">
+          <label class="toggle"><span><b>Allow employee sign-ups</b><small>When off, the "Create an account" form is closed and only admins can add employees.</small></span><input type="checkbox" id="pol-signup" /><i class="switch"></i></label>
+          <label class="toggle"><span><b>Allow file and image sharing</b><small>When off, the + button in chats is disabled for everyone.</small></span><input type="checkbox" id="pol-uploads" /><i class="switch"></i></label>
+          <label class="toggle"><span><b>Allow view-once photos</b><small>Lets employees send photos that open one time and disappear.</small></span><input type="checkbox" id="pol-once" /><i class="switch"></i></label>
+          <label class="field">Maximum upload size
+            <select id="pol-max"><option value="2">2 MB</option><option value="5">5 MB</option><option value="10">10 MB</option></select>
+          </label>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- AUTH 2: CREATE ACCOUNT -->
+  <section id="view-register" class="login auth">
+    <div class="login-card">
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span></div>
+      <div class="role-tabs"><span class="on">Employee</span><a href="#" data-auth="adminreg">Admin</a></div>
+      <h2>Create your account</h2>
+      <p class="sub">Takes under a minute. Nothing you say sticks around.</p>
+      <form id="register-form" novalidate>
+        <label class="field">Display name
+          <input type="text" id="reg-name" maxlength="32" autocomplete="name" placeholder="Priya Sharma" />
+        </label>
+        <label class="field">Username
+          <input type="text" id="reg-username" maxlength="20" autocomplete="username" placeholder="priya_s" />
+        </label>
+        <label class="field">Email
+          <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label class="field">Employee company ID
+          <input type="text" id="reg-company" maxlength="20" autocomplete="off" placeholder="e.g. WH-2045" />
+        </label>
+        <label class="field">Password
+          <span class="pw"><input type="password" id="reg-password" autocomplete="new-password" placeholder="At least 8 characters" />
+            <button type="button" class="pw-toggle" data-toggle-pw aria-label="Show password"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+          <span class="strength" id="reg-strength" data-level="0"><i></i><i></i><i></i><i></i><small id="reg-strength-label">Use 8+ characters</small></span>
+        </label>
+        <label class="field">Confirm password
+          <input type="password" id="reg-confirm" autocomplete="new-password" />
+        </label>
+        <label class="check"><input type="checkbox" id="reg-terms" /><span>I understand Whisper messages vanish and can't be recovered.</span></label>
+        <p class="form-error" id="reg-error" role="alert"></p>
+        <button type="submit" class="btn primary block">Create account</button>
+        <p class="hint">Already have an account? <a href="#" class="link" data-auth="login">Sign in</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- AUTH 3: FORGOT PASSWORD (3 steps) -->
+  <section id="view-forgot" class="login auth">
+    <div class="login-card">
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span></div>
+      <div class="steps" id="forgot-steps"><i class="on"></i><i></i><i></i></div>
+
+      <div class="fstep" data-step="1">
+        <h2>Forgot your password?</h2>
+        <p class="sub">Enter your username or email and we'll send you a 6-digit code.</p>
+        <form id="forgot-form-1" novalidate>
+          <label class="field">Username or email
+            <input type="text" id="forgot-id" autocomplete="username" />
+          </label>
+          <p class="form-error" id="forgot-error-1" role="alert"></p>
+          <button type="submit" class="btn primary block">Send code</button>
+        </form>
+      </div>
+
+      <div class="fstep" data-step="2" hidden>
+        <h2>Check your inbox</h2>
+        <p class="sub" id="forgot-sub-2">We sent a code to your email.</p>
+        <div class="demo-code" id="demo-code">Demo mode: no email is sent. Your code is <b id="demo-code-val">------</b></div>
+        <form id="forgot-form-2" novalidate>
+          <label class="field">6-digit code
+            <input type="text" id="forgot-code" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456" />
+          </label>
+          <label class="field">New password
+            <span class="pw"><input type="password" id="forgot-pw" autocomplete="new-password" placeholder="At least 8 characters" />
+              <button type="button" class="pw-toggle" data-toggle-pw aria-label="Show password"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+          </label>
+          <label class="field">Confirm new password
+            <input type="password" id="forgot-pw2" autocomplete="new-password" />
+          </label>
+          <p class="form-error" id="forgot-error-2" role="alert"></p>
+          <button type="submit" class="btn primary block">Reset password</button>
+          <p class="hint">Didn't get it? <a href="#" class="link" id="resend-code">Send a new code</a></p>
+        </form>
+      </div>
+
+      <div class="fstep done" data-step="3" hidden>
+        <div class="done-ic">✓</div>
+        <h2>Password updated</h2>
+        <p class="sub">You can now sign in with your new password.</p>
+        <button type="button" class="btn primary block" data-auth="login">Back to sign in</button>
+      </div>
+
+      <p class="hint back-row"><a href="#" class="link" data-auth="login">← Back to sign in</a></p>
+    </div>
+  </section>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app" data-tab="chats" hidden>
+
+    <!-- NAV RAIL -->
+    <nav class="rail" aria-label="Main">
+      <span class="rail-logo logo-mark" aria-hidden="true"></span>
+      <button class="rail-btn active" data-tab="chats" title="Chats" aria-label="Chats"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Chats</span></button>
+      <button class="rail-btn" data-tab="contacts" title="Contacts" aria-label="Contacts"><svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg><span>Contacts</span></button>
+      <button class="rail-btn" data-tab="insights" title="Insights" aria-label="Insights"><svg class="ic" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span>Insights</span></button>
+      <button class="rail-btn" data-tab="settings" title="Settings" aria-label="Settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></button>
+    </nav>
+
+    <!-- SIDEBAR: conversation list + me card -->
+    <aside class="sidebar">
+      <div class="brand"><span class="logo-mark"></span><span class="logo-text">Whisper</span>
+        <button class="icon-btn add-contact-btn" data-open="contact-overlay" title="Add contact" aria-label="Add contact"><svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg></button>
+      </div>
+      <div class="search"><input type="search" id="search-input" placeholder="Search conversations" autocomplete="off" /></div>
+      <div class="list-label">Messages</div>
+      <div id="chat-list" class="chat-list"></div>
+
+      <div class="me-card" id="me-card">
+        <span class="av-wrap" id="me-avatar"></span>
+        <span class="row-text"><b id="me-name">Rasmalai</b><small id="me-handle">@rasmalai</small></span>
+        <button class="icon-btn" id="open-profile-btn" title="Profile settings" aria-label="Profile settings">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- VIEW: CHAT ROOM -->
+    <main class="chat" id="pane-chat">
+      <div class="chat-none" id="chat-none" hidden>
+        <div class="empty-ic">💬</div>
+        <h3>No conversation open</h3>
+        <p>Add a contact to start a disappearing chat.</p>
+        <button class="btn primary" data-open="contact-overlay">Add contact</button>
+      </div>
+
+      <div class="chat-view" id="chat-view">
+        <header class="chat-head">
+          <button class="icon-btn back-btn" id="back-btn" aria-label="Back"><svg class="ic" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="head-who" id="open-info" title="Contact info">
+            <span class="av-wrap" id="head-avatar"></span>
+            <span class="head-text"><b id="head-name">Bhumi</b><small id="head-status">online</small></span>
+          </button>
+          <div class="head-actions">
+            <button class="timer-pill" id="btn-open-timeline" title="Set message lifespan for this contact">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
+              <span id="timer-badge">10s</span>
+            </button>
+            <button class="icon-btn" data-demo="Voice calls aren't part of this demo" title="Voice call"><svg class="ic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></button>
+            <button class="icon-btn" data-demo="Video calls aren't part of this demo" title="Video call"><svg class="ic" viewBox="0 0 24 24"><path d="m23 7-7 5 7 5z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></button>
+          </div>
+        </header>
+
+        <div class="notice" id="notice"></div>
+        <div class="feed" id="feed"></div>
+
+        <form class="composer" id="composer" autocomplete="off">
+          <button type="button" class="icon-btn" id="attach-btn" title="Attach a file or image" aria-label="Attach" aria-haspopup="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="attach-menu" id="attach-menu" role="menu">
+          <button type="button" id="pick-image" role="menuitem"><span class="am-ic am-img"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><span><b>Photo or image</b><small>Can be view-once</small></span></button>
+          <button type="button" id="pick-file" role="menuitem"><span class="am-ic am-file"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><span><b>File</b><small>PDF, docs, zip… up to 10 MB</small></span></button>
+        </div>
+        <input type="file" id="image-input" accept="image/*" hidden />
+        <input type="file" id="file-input" hidden />
+          <input type="text" id="msg-input" placeholder="Message…" />
+          <button type="button" class="icon-btn" id="emoji-btn" title="Add emoji"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></button>
+          <button type="submit" class="send-btn" title="Send"><svg class="ic" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></button>
+        </form>
+      </div>
+    </main>
+
+    <!-- PAGE: CONTACTS -->
+    <section class="page" id="pane-contacts" hidden>
+      <header class="page-head">
+        <div><h2>Contacts</h2><p id="contact-count">0 people</p></div>
+        <div class="page-tools">
+          <input type="search" id="contact-search" placeholder="Search contacts" autocomplete="off" />
+          <button class="btn primary" data-open="contact-overlay">Add contact</button>
+        </div>
+      </header>
+      <div class="contact-grid" id="contact-grid"></div>
+    </section>
+
+    <!-- PAGE: INSIGHTS -->
+    <section class="page" id="pane-insights" hidden>
+      <header class="page-head">
+        <div><h2>Insights</h2><p id="insight-sub">What your chats look like right now.</p></div>
+      </header>
+      <div class="tiles" id="tiles"></div>
+      <div class="two-col">
+        <div class="panel"><h3>Lifespan by contact</h3><p class="panel-sub">Bar length shows how long messages stay visible.</p><div id="life-chart" class="chart"></div></div>
+        <div class="panel"><h3>Activity</h3><p class="panel-sub">Messages sent and received this session.</p><div id="act-chart" class="chart"></div></div>
+      </div>
+      <div class="panel"><h3>Vanish log</h3><p class="panel-sub">Only the fact that something vanished is kept, never the text.</p><ul id="vanish-log" class="vlog"></ul></div>
+    </section>
+
+    <!-- PAGE: SETTINGS -->
+    <section class="page" id="pane-settings" hidden>
+      <header class="page-head">
+        <div><h2>Settings</h2><p>Make Whisper feel like yours.</p></div>
+      </header>
+      <div class="set-grid">
+        <div class="panel">
+          <h3>Appearance</h3>
+          <div class="set-label">Theme</div>
+          <div class="seg" id="theme-seg" role="radiogroup" aria-label="Theme">
+            <button data-theme-opt="light" role="radio">Light</button>
+            <button data-theme-opt="dark" role="radio">Dark</button>
+            <button data-theme-opt="system" role="radio">System</button>
+          </div>
+          <div class="set-label">Accent colour</div>
+          <div class="swatches" id="accent-swatches">
+            <button data-accent="teal" style="--sw:#14958a" aria-label="Teal"></button>
+            <button data-accent="indigo" style="--sw:#6366f1" aria-label="Indigo"></button>
+            <button data-accent="rose" style="--sw:#e11d48" aria-label="Rose"></button>
+            <button data-accent="plum" style="--sw:#9333ea" aria-label="Plum"></button>
+            <button data-accent="ocean" style="--sw:#0ea5e9" aria-label="Ocean"></button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Timers and privacy</h3>
+          <label class="field">Default lifespan for new contacts
+            <select id="set-default-life">
+              <option value="5">5 seconds</option><option value="10">10 seconds</option><option value="30">30 seconds</option>
+              <option value="60">1 minute</option><option value="300">5 minutes</option><option value="0">Off (permanent)</option>
+            </select>
+          </label>
+          <label class="toggle"><span><b>Blur messages</b><small>Messages stay blurred until you hover or tap them.</small></span><input type="checkbox" id="set-blur" /><i class="switch"></i></label>
+          <label class="toggle"><span><b>Show typing indicator</b><small>See "typing…" while a contact replies.</small></span><input type="checkbox" id="set-typing" /><i class="switch"></i></label>
+          <label class="toggle"><span><b>Demo auto-replies</b><small>Contacts answer automatically so you can try the timers.</small></span><input type="checkbox" id="set-reply" /><i class="switch"></i></label>
+          <label class="toggle"><span><b>Message sound</b><small>Play a soft tone when a message arrives.</small></span><input type="checkbox" id="set-sound" /><i class="switch"></i></label>
+        </div>
+
+        <div class="panel danger-zone">
+          <h3>Danger zone</h3>
+          <p class="panel-sub">These actions can't be undone.</p>
+          <div class="dz-row"><span><b>Vanish everything now</b><small>Erase every visible message in every chat.</small></span><button class="btn danger" id="vanish-all">Vanish all</button></div>
+          <div class="dz-row"><span><b>Log out</b><small>You can sign back in any time.</small></span><button class="btn ghost" id="logout-btn-2">Log out</button></div>
+          <div class="dz-row"><span><b>Delete account</b><small>Removes your profile and contacts from this browser.</small></span><button class="btn danger" id="delete-account">Delete</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- DRAWER: CONTACT INFO -->
+  <div class="overlay drawer-overlay" id="info-overlay">
+    <aside class="drawer" role="dialog" aria-labelledby="ci-title">
+      <div class="sheet-head">
+        <h3 id="ci-title">Contact info</h3>
+        <button class="icon-btn" data-close="info-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="profile-card">
+        <div class="banner" id="ci-banner"></div>
+        <div class="pv-avatar" id="ci-avatar"></div>
+        <div class="pv-body">
+          <h4 id="ci-name"></h4>
+          <span class="handle" id="ci-status"></span>
+          <div class="pv-label">Lifespan with this contact</div>
+          <p><button class="life-chip" id="ci-life-btn"></button></p>
+        </div>
+      </div>
+      <label class="field">Name<input type="text" id="ci-edit-name" maxlength="32" /></label>
+      <label class="field">Note <em>(only you see this)</em><textarea id="ci-edit-note" rows="3" maxlength="120"></textarea></label>
+      <label class="toggle"><span><b>Mute notifications</b><small>No sound when this contact messages you.</small></span><input type="checkbox" id="ci-mute" /><i class="switch"></i></label>
+      <div class="sheet-actions split">
+        <button class="btn danger" id="ci-remove">Remove contact</button>
+        <button class="btn ghost" id="ci-clear">Clear chat</button>
+        <button class="btn primary" id="ci-save">Save</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- DRAWER: PROFILE SETTINGS -->
+  <div class="overlay drawer-overlay" id="profile-overlay">
+    <aside class="drawer" role="dialog" aria-labelledby="pf-title">
+      <div class="sheet-head">
+        <h3 id="pf-title">Profile settings</h3>
+        <button class="icon-btn" data-close="profile-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <div class="profile-card">
+        <div class="banner" id="pv-banner"></div>
+        <div class="pv-avatar" id="pv-avatar"></div>
+        <div class="pv-body">
+          <h4 id="pv-name">Rasmalai</h4>
+          <span class="handle" id="pv-handle">@rasmalai</span>
+          <div class="pv-label">About me</div>
+          <p id="pv-bio"></p>
+        </div>
+      </div>
+
+      <label class="field">Display name<input type="text" id="edit-name" maxlength="32" /></label>
+      <label class="field">Bio<textarea id="edit-bio" rows="3" maxlength="160"></textarea></label>
+      <label class="field">Avatar image URL <em>(optional)</em><input type="url" id="edit-avatar" placeholder="https://…" /></label>
+      <label class="field row">Banner colour<input type="color" id="edit-banner" value="#0f766e" /></label>
+
+      <div class="sheet-actions">
+        <button class="btn danger" id="logout-btn">Log out</button>
+        <button class="btn primary" id="save-profile">Save changes</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- SHEET: ADD CONTACT -->
+  <div class="overlay" id="contact-overlay">
+    <div class="sheet" role="dialog" aria-labelledby="ac-title">
+      <div class="sheet-head">
+        <div><h3 id="ac-title">Add a contact</h3><p>They'll appear in your chats with their own lifespan.</p></div>
+        <button class="icon-btn" data-close="contact-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <form id="contact-form" novalidate>
+        <div class="ac-preview" id="ac-preview"></div>
+        <label class="field">Name<input type="text" id="ac-name" maxlength="32" placeholder="e.g. Meera" autocomplete="off" /></label>
+        <label class="field">Status line <em>(optional)</em><input type="text" id="ac-sub" maxlength="40" placeholder="e.g. Book club buddy" autocomplete="off" /></label>
+        <label class="field">Message lifespan
+          <select id="ac-life">
+            <option value="5">5 seconds</option><option value="10">10 seconds</option><option value="30">30 seconds</option>
+            <option value="60">1 minute</option><option value="300">5 minutes</option><option value="0">Off (permanent)</option>
+          </select>
+        </label>
+        <p class="form-error" id="ac-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button type="button" class="btn ghost" data-close="contact-overlay">Cancel</button>
+          <button type="submit" class="btn primary">Add contact</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SHEET: LIFESPAN CHOOSER (per contact) -->
+  <div class="overlay" id="timeline-overlay">
+    <div class="sheet" role="dialog" aria-labelledby="tl-title">
+      <div class="sheet-head">
+        <div>
+          <h3 id="tl-title">Message lifespan</h3>
+          <p id="tl-sub">Choose how long new messages stay visible before they vanish for good.</p>
+        </div>
+        <button class="icon-btn" data-close="timeline-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <div class="opt-grid" id="opt-grid">
+        <label class="opt"><input type="radio" name="life" value="5" /><div><span class="opt-title">5 seconds</span><span class="tag">Ultra-fast</span><p>Gone almost instantly. Great for codes or one-time info.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="10" /><div><span class="opt-title">10 seconds</span><span class="tag">Recommended</span><p>Enough time to read comfortably, without lingering logs.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="30" /><div><span class="opt-title">30 seconds</span><span class="tag">Standard</span><p>Keeps the conversation visible for half a minute.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="60" /><div><span class="opt-title">1 minute</span><span class="tag">Extended</span><p>Room for a quick back-and-forth before cleanup.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="300" /><div><span class="opt-title">5 minutes</span><span class="tag">Relaxed</span><p>For longer replies you want to come back to.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="0" /><div><span class="opt-title">Permanent</span><span class="tag muted">Timer off</span><p>Messages stay in the chat until you leave it.</p></div></label>
+        <label class="opt"><input type="radio" name="life" value="custom" /><div><span class="opt-title">Custom</span><span class="tag muted">You decide</span>
+          <p class="custom-row">Vanish after <input type="number" id="life-custom" min="1" max="86400" value="20" /> seconds</p></div></label>
+      </div>
+
+      <label class="toggle compact"><span><b>Apply to all chats</b><small>Off by default, so each contact keeps its own lifespan.</small></span><input type="checkbox" id="life-all" /><i class="switch"></i></label>
+
+      <div class="sheet-actions">
+        <button class="btn ghost" data-close="timeline-overlay">Cancel</button>
+        <button class="btn primary" id="save-timeline">Save lifespan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHEET: ADD / EDIT EMPLOYEE (admin) -->
+  <div class="overlay" id="emp-overlay">
+    <div class="sheet" role="dialog" aria-labelledby="emp-title">
+      <div class="sheet-head">
+        <div><h3 id="emp-title">Add employee</h3><p id="emp-sub">They can sign in with their username or email, password and company ID.</p></div>
+        <button class="icon-btn" data-close="emp-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <form id="emp-form" novalidate>
+        <label class="field">Full name<input type="text" id="emp-name" maxlength="32" autocomplete="off" /></label>
+        <label class="field">Username<input type="text" id="emp-username" maxlength="20" autocomplete="off" /></label>
+        <label class="field">Email<input type="email" id="emp-email" autocomplete="off" /></label>
+        <label class="field">Employee company ID<input type="text" id="emp-company" maxlength="20" autocomplete="off" placeholder="e.g. WH-2045" /></label>
+        <label class="field" id="emp-pw-row">Temporary password<input type="text" id="emp-pw" autocomplete="off" placeholder="At least 8 characters" /></label>
+        <p class="form-error" id="emp-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button type="button" class="btn ghost" data-close="emp-overlay">Cancel</button>
+          <button type="submit" class="btn primary" id="emp-save">Add employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SHEET: RESET EMPLOYEE PASSWORD (admin) -->
+  <div class="overlay" id="rp-overlay">
+    <div class="sheet" role="dialog" aria-labelledby="rp-title">
+      <div class="sheet-head">
+        <div><h3 id="rp-title">Reset password</h3><p id="rp-sub"></p></div>
+        <button class="icon-btn" data-close="rp-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <form id="rp-form" novalidate>
+        <label class="field">New password<input type="text" id="rp-pw" autocomplete="off" placeholder="At least 8 characters" /></label>
+        <p class="form-error" id="rp-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button type="button" class="btn ghost" data-close="rp-overlay">Cancel</button>
+          <button type="submit" class="btn primary">Reset password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SHEET: SEND ATTACHMENT -->
+  <div class="overlay" id="upload-overlay">
+    <div class="sheet" role="dialog" aria-labelledby="up-title">
+      <div class="sheet-head">
+        <div><h3 id="up-title">Send attachment</h3><p id="up-sub">Choose how long it stays visible.</p></div>
+        <button class="icon-btn" data-close="upload-overlay" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="up-preview" id="up-preview"></div>
+      <label class="field">Caption <em>(optional)</em><input type="text" id="up-caption" maxlength="120" autocomplete="off" /></label>
+      <div class="set-label">Disappears after</div>
+      <div class="chips" id="up-timers" role="radiogroup" aria-label="Disappear timer"></div>
+      <p class="custom-row" id="up-custom-row" hidden>Vanish after <input type="number" id="up-custom" min="1" max="86400" value="45" /> seconds</p>
+      <label class="toggle compact" id="up-once-row"><span><b>View once</b><small>The photo opens one time, then it's gone for good.</small></span><input type="checkbox" id="up-once" /><i class="switch"></i></label>
+      <div class="sheet-actions">
+        <button class="btn ghost" data-close="upload-overlay">Cancel</button>
+        <button class="btn primary" id="up-send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN IMAGE VIEWER -->
+  <div class="viewer" id="viewer" hidden>
+    <button class="viewer-x icon-btn" id="viewer-close" aria-label="Close"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <img id="viewer-img" alt="" />
+    <p class="viewer-note" id="viewer-note"></p>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
