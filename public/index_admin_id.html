@@ -40,23 +40,19 @@
   <!-- AUTH 1b: ADMIN LOGIN -->
   <section id="view-admin" class="login auth">
     <div class="login-card">
-      <div class="brand-mark" aria-hidden="true"><span></span></div>
-      <h1>Admin Console</h1>
+      <div class="logo"><span class="logo-mark"></span><span class="logo-text">Whisper</span></div>
+      <div class="role-tabs"><a href="#" data-auth="login">Employee</a><span class="on">Admin</span></div>
+      <h2>Admin login</h2>
       <p class="sub">Sign in with your Admin ID and Company ID.</p>
-      <div class="auth-switch" role="tablist">
-        <button type="button" data-auth="login">Employee</button>
-        <button type="button" data-auth="register">Create account</button>
-        <button type="button" class="on" data-auth="admin">Admin</button>
-      </div>
       <form id="admin-form" novalidate>
         <label class="field">Username or email
-          <input type="text" id="admin-username" required autocomplete="username" placeholder="e.g. admin or compadmin" />
+          <input type="text" id="admin-username" required autocomplete="username" />
         </label>
         <label class="field">Admin ID
-          <input type="text" id="admin-id" required autocomplete="off" placeholder="Enter your admin ID" />
+          <input type="text" id="admin-id" required autocomplete="off" />
         </label>
         <label class="field">Company ID
-          <input type="text" id="admin-company" required autocomplete="off" placeholder="WHISPER-HQ or WH-1001" />
+          <input type="text" id="admin-company" required autocomplete="off" />
         </label>
         <label class="field">Password
           <span class="pw"><input type="password" id="admin-pw" required autocomplete="current-password" />
@@ -64,7 +60,6 @@
         </label>
         <p class="form-error" id="admin-error" role="alert"></p>
         <button type="submit" class="btn primary block">Sign in as admin</button>
-        <p class="hint">Whisper Admin: <b>admin</b> · ID <b>ADM-1001</b> · Co <b>WHISPER-HQ</b> · <b>admin@123</b><br/>Company Admin: <b>compadmin</b> · ID <b>ADM-2001</b> · Co <b>WH-1001</b> · <b>company@123</b></p>
       </form>
     </div>
   </section>
